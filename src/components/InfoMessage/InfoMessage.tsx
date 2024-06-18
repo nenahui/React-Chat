@@ -13,7 +13,7 @@ export const InfoMessage: React.FC<Props> = ({ message }) => {
         <Callout.Icon>
           <InfoCircledIcon width={22} height={22} />
         </Callout.Icon>
-        <Callout.Text>{message}</Callout.Text>
+        <Callout.Text size={'3'}>{message}</Callout.Text>
       </Flex>
     </Callout.Root>
   );
