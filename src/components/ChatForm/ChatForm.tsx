@@ -68,7 +68,7 @@ export const ChatForm: React.FC<Props> = ({ onSubmit }) => {
             <ChatBubbleIcon height={'20'} width={'20'} />
           </TextField.Slot>
           <TextField.Slot style={{ cursor: 'pointer' }}>
-            <Tooltip content={'Enter your username'}>
+            <Tooltip content={'Enter your message'}>
               <QuestionMarkCircledIcon height={'18'} width={'18'} />
             </Tooltip>
           </TextField.Slot>
