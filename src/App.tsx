@@ -10,19 +10,31 @@ const url = 'http://146.185.154.90:8000/messages';
 
 export const App = () => {
   const [messages, setMessages] = useState<Message[]>([]);
+  const [lastMessageDate, setLastMessageDate] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<Message[]>(url);
-        setMessages(response.data);
+        const response = await axios.get<Message[]>(
+          url + (lastMessageDate !== '' ? '?datetime=' + lastMessageDate : '')
+        );
+        if (response.data.length > 0) {
+          setMessages((prevState) => [...prevState, ...response.data]);
+          setLastMessageDate(response.data[response.data.length - 1].datetime);
+        }
       } catch (error) {
         if (error instanceof Error) throw new Error(error.message);
       }
     };
 
     void fetchData();
-  }, []);
+
+    const interval = setInterval(fetchData, 3000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [lastMessageDate]);
 
   const sendMessage = async (message: MessageMutation) => {
     const data = new URLSearchParams();
@@ -31,9 +43,10 @@ export const App = () => {
     await axios.post(url, data);
   };
 
-  const messagesList = messages.map((message) => (
-    <ChatItem key={message._id} message={message} />
-  ));
+  const messagesList = messages
+    .slice()
+    .reverse()
+    .map((message) => <ChatItem key={message._id} message={message} />);
 
   return (
     <Container size={'1'}>
