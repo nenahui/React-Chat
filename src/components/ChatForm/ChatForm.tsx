@@ -39,6 +39,7 @@ export const ChatForm: React.FC<Props> = ({ onSubmit }) => {
         <TextField.Root
           placeholder={'Username…'}
           radius={'large'}
+          required={true}
           size={'3'}
           name={'author'}
           onChange={onChange}
@@ -57,6 +58,7 @@ export const ChatForm: React.FC<Props> = ({ onSubmit }) => {
         <TextField.Root
           placeholder={'Message…'}
           radius={'large'}
+          required={true}
           size={'3'}
           name={'message'}
           onChange={onChange}
