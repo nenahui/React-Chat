@@ -46,7 +46,7 @@ export const ChatForm: React.FC<Props> = ({ onSubmit }) => {
           value={messageMutation.author}
         >
           <TextField.Slot>
-            <ChatBubbleIcon height={'20'} width={'20'} />
+            <AvatarIcon height={'20'} width={'20'} />
           </TextField.Slot>
           <TextField.Slot style={{ cursor: 'pointer' }}>
             <Tooltip content={'Enter your username'}>
@@ -65,7 +65,7 @@ export const ChatForm: React.FC<Props> = ({ onSubmit }) => {
           value={messageMutation.message}
         >
           <TextField.Slot>
-            <AvatarIcon height={'20'} width={'20'} />
+            <ChatBubbleIcon height={'20'} width={'20'} />
           </TextField.Slot>
           <TextField.Slot style={{ cursor: 'pointer' }}>
             <Tooltip content={'Enter your username'}>
