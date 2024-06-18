@@ -1,15 +1,49 @@
+import React, { useState } from 'react';
 import {
   QuestionMarkCircledIcon,
   AvatarIcon,
   ChatBubbleIcon,
 } from '@radix-ui/react-icons';
 import { Button, Flex, TextField, Tooltip } from '@radix-ui/themes';
+import { MessageMutation } from '../../types';
 
-export const ChatForm = () => {
+const initialState = {
+  author: '',
+  message: '',
+};
+
+interface Props {
+  onSubmit: (messageMutation: MessageMutation) => void;
+}
+
+export const ChatForm: React.FC<Props> = ({ onSubmit }) => {
+  const [messageMutation, setMessageMutation] =
+    useState<MessageMutation>(initialState);
+
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setMessageMutation((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const onFormSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    onSubmit(messageMutation);
+    setMessageMutation(initialState);
+  };
+
   return (
-    <form>
+    <form onSubmit={onFormSubmit}>
       <Flex direction={'column'} gap={'2'}>
-        <TextField.Root placeholder={'Username…'} radius={'large'} size={'3'}>
+        <TextField.Root
+          placeholder={'Username…'}
+          radius={'large'}
+          size={'3'}
+          name={'author'}
+          onChange={onChange}
+          value={messageMutation.author}
+        >
           <TextField.Slot>
             <ChatBubbleIcon height={'20'} width={'20'} />
           </TextField.Slot>
@@ -20,7 +54,14 @@ export const ChatForm = () => {
           </TextField.Slot>
         </TextField.Root>
 
-        <TextField.Root placeholder={'Message…'} radius={'large'} size={'3'}>
+        <TextField.Root
+          placeholder={'Message…'}
+          radius={'large'}
+          size={'3'}
+          name={'message'}
+          onChange={onChange}
+          value={messageMutation.message}
+        >
           <TextField.Slot>
             <AvatarIcon height={'20'} width={'20'} />
           </TextField.Slot>

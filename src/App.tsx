@@ -3,7 +3,7 @@ import { Container, Flex, Separator } from '@radix-ui/themes';
 import { InfoMessage } from './components/InfoMessage/InfoMessage';
 import { ChatItem } from './components/ChatItem/ChatItem';
 import { useEffect, useState } from 'react';
-import { Message } from './types';
+import { Message, MessageMutation } from './types';
 import axios from 'axios';
 
 const url = 'http://146.185.154.90:8000/messages';
@@ -24,6 +24,13 @@ export const App = () => {
     void fetchData();
   }, []);
 
+  const sendMessage = async (message: MessageMutation) => {
+    const data = new URLSearchParams();
+    data.set('author', message.author);
+    data.set('message', message.message);
+    await axios.post(url, data);
+  };
+
   const messagesList = messages.map((message) => (
     <ChatItem key={message._id} message={message} />
   ));
@@ -38,7 +45,7 @@ export const App = () => {
 
       <Separator size={'4'} my={'4'} />
 
-      <ChatForm />
+      <ChatForm onSubmit={sendMessage} />
 
       <Separator size={'4'} my={'4'} />
 
